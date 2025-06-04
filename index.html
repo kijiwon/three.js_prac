@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="kr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,17 +9,16 @@
     <canvas id="canvas" width="300" height="300"></canvas>
 
     <script type="importmap">
-      <!-- npm install과 동일한 동작 -->
       {
         "imports": {
           "three": "https://unpkg.com/three@0.141.0/build/three.module.js",
-          "GLTFLoader": "https://unpkg.com/three@0.141.0/examples/jsm/loaders/GLTFLoader.js"
+          "three/examples/jsm/loaders/GLTFLoader.js": "https://unpkg.com/three@0.141.0/examples/jsm/loaders/GLTFLoader.js"
         }
       }
     </script>
     <script type="module">
-      import { GLTFLoader } from "GLTFLoader";
       import * as THREE from "three";
+      import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
       // 3D 모델 브라우저에 표시하는 방법
       // 1. 장면 만들기
@@ -28,6 +27,7 @@
       let renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector("#canvas"),
       });
+      renderer.setSize(300, 300);
 
       // 3d 모델 보여줄 때 필요한 것들
       // 1. 카메라 - PerspectiveCamera(원근법 O), OrthographicCamera(원근법 무시)
