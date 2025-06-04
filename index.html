@@ -7,5 +7,39 @@
   </head>
   <body>
     <canvas id="canvas" width="300" height="300"></canvas>
+
+    <script type="importmap">
+      <!-- npm install과 동일한 동작 -->
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.141.0/build...",
+          "GLTFLoader": "https://unpkg.com/three@0.141.0/examp..."
+        }
+      }
+    </script>
+    <script type="module">
+      import { GLTFLoader } from "GLTFLoader";
+      import * as THREE from "three";
+
+      // 3D 모델 브라우저에 표시하는 방법
+      // 1. 장면 만들기
+      let scene = new THREE.Scene();
+      // 2. 브라우저에 렌더링
+      let renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector("#canvas"),
+      });
+
+      // GLTF파일 가져오기
+      let loader = new GLTFLoader();
+      loader.load(
+        "shiba/scene.gltf",
+        // 로딩이 끝난 후 3d 모델 넣어주기
+        function (gltf) {
+          // gltf 파라미터에 모델이 들어있음
+          scene.add(gltf.scene);
+          renderer.render(scene);
+        }
+      );
+    </script>
   </body>
 </html>
