@@ -12,8 +12,8 @@
       <!-- npm install과 동일한 동작 -->
       {
         "imports": {
-          "three": "https://unpkg.com/three@0.141.0/build...",
-          "GLTFLoader": "https://unpkg.com/three@0.141.0/examp..."
+          "three": "https://unpkg.com/three@0.141.0/build/three.module.js",
+          "GLTFLoader": "https://unpkg.com/three@0.141.0/examples/jsm/loaders/GLTFLoader.js"
         }
       }
     </script>
@@ -29,6 +29,18 @@
         canvas: document.querySelector("#canvas"),
       });
 
+      // 3d 모델 보여줄 때 필요한 것들
+      // 1. 카메라 - PerspectiveCamera(원근법 O), OrthographicCamera(원근법 무시)
+      let camera = new THREE.PerspectiveCamera(30, 1);
+      camera.position.set(0, 0, 5);
+
+      // 2. 조명 - AmbientLight, PointLight, DirectionalLight
+      let light = new THREE.DirectionalLight(0xffff00, 10);
+      scene.add(light);
+
+      // 3. 배경
+      scene.background = new THREE.Color("white");
+
       // GLTF파일 가져오기
       let loader = new GLTFLoader();
       loader.load(
@@ -37,7 +49,7 @@
         function (gltf) {
           // gltf 파라미터에 모델이 들어있음
           scene.add(gltf.scene);
-          renderer.render(scene);
+          renderer.render(scene, camera);
         }
       );
     </script>
