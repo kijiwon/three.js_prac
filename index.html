@@ -26,8 +26,9 @@
       // 2. 브라우저에 렌더링
       let renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector("#canvas"),
+        antialias: true, // 테두리 계단현상 제거
       });
-      renderer.setSize(300, 300);
+      renderer.outputEncoding = THREE.sRGBEncoding; // 색상 적용
 
       // 3d 모델 보여줄 때 필요한 것들
       // 1. 카메라 - PerspectiveCamera(원근법 O), OrthographicCamera(원근법 무시)
@@ -49,7 +50,16 @@
         function (gltf) {
           // gltf 파라미터에 모델이 들어있음
           scene.add(gltf.scene);
-          renderer.render(scene, camera);
+
+          // 애니메이션 넣기
+          function animate() {
+            requestAnimationFrame(animate);
+            // 1초에 60번 실행
+            // y축 회전
+            gltf.scene.rotation.y += 0.001;
+            renderer.render(scene, camera);
+          }
+          animate();
         }
       );
     </script>
