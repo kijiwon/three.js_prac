@@ -1,40 +1,41 @@
 import * as THREE from "three";
-import WebGL from "../../node_modules/three/examples/jsm/capabilities/WebGL.js";
 
-// 웹 호환성
-if (WebGL.isWebGL2Available()) {
-  // 장면 생성
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffe187);
+// three.js 구성요소
+// 1. Scene: 화면에서 보여주려는 객체를 담는 공간
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffe287);
+// add -> 요소 추가
+// scene.add(요소);
 
-  const camera = new THREE.PerspectiveCamera(
-    50,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.set(3, 3, 3);
-  camera.lookAt(0, 0, 0);
+// 2. Camera: Scene을 바라볼 시점을 결정
+const camera = new THREE.PerspectiveCamera(
+  50,
+  window.innerWidth / window.innerHeight, // window의 종횡비
+  0.1, // 최소거리
+  1000 // 최대거리
+);
+// 위치 설정
+camera.position.set(2, 2, 2);
+// 바라볼 좌표값 설정 - camera는 z축에 평행한 방향을 비춤
+camera.lookAt(0, 0, 0);
 
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+// 3. Renderer: Scene과 Camera의 정보를 이용해 화면을 그려주는 역할
+const renderer = new THREE.WebGLRenderer();
+// 사이즈 설정
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-  // 빛
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-  scene.add(ambientLight);
+// 화면에 표시
+document.body.appendChild(renderer.domElement);
 
-  const pointLight = new THREE.PointLight(0xffffff, 1);
-  pointLight.position.set(0, 2, 4);
-  scene.add(pointLight);
+// 정육면체 표시하기
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshStandardMaterial({
+  color: "0x2e6ff2",
+});
+const box = new THREE.Mesh(geometry, material);
+scene.add(box);
+// box 안보임 왜? camera 기본 위치가 정육면체의 기본 위치와 동일하기 때문(0,0,0)
+// -> camera 위치를 바꿔줌(camera.position.set)
 
-  // 박스
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshStandardMaterial({ color: 0x2e6ff2 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
-
-  renderer.render(scene, camera);
-} else {
-  document.body.appendChild(WebGL.getErrorMessage());
-}
+// scene, camera 연결
+renderer.render(scene, camera);
