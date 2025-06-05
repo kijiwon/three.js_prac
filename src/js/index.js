@@ -27,10 +27,16 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // 화면에 표시
 document.body.appendChild(renderer.domElement);
 
+// light 설정
+const light = new THREE.DirectionalLight(0xffffff);
+// light 위치 설정
+light.position.set(2, 4, 3);
+scene.add(light); // light가 밝히는 위치만 밝게 표시됨
+
 // 정육면체 표시하기
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshStandardMaterial({
-  color: "0x2e6ff2",
+  color: 0x2e6ff2,
 });
 const box = new THREE.Mesh(geometry, material);
 scene.add(box);
