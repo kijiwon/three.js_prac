@@ -1,4 +1,6 @@
 import * as THREE from "three";
+// html canvas 태그 선택
+const $result = document.getElementById("result");
 
 // three.js 구성요소
 // 1. Scene: 화면에서 보여주려는 객체를 담는 공간
@@ -9,8 +11,8 @@ scene.background = new THREE.Color(0xffe287);
 
 // 2. Camera: Scene을 바라볼 시점을 결정
 const camera = new THREE.PerspectiveCamera(
-  50,
-  window.innerWidth / window.innerHeight, // window의 종횡비
+  50, // 시야 각
+  $result.clientWidth / $result.clientHeight, // window의 종횡비
   0.1, // 최소거리
   1000 // 최대거리
 );
@@ -20,12 +22,12 @@ camera.position.set(2, 2, 2);
 camera.lookAt(0, 0, 0);
 
 // 3. Renderer: Scene과 Camera의 정보를 이용해 화면을 그려주는 역할
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ canvas: $result, antialias: true }); // 특정 DOM 요소 전달
 // 사이즈 설정
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize($result.clientWidth, $result.clientHeight);
 
 // 화면에 표시
-document.body.appendChild(renderer.domElement);
+// document.body.appendChild(renderer.domElement);
 
 // light 설정
 const light = new THREE.DirectionalLight(0xffffff);
