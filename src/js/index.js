@@ -45,5 +45,12 @@ scene.add(box);
 // box 안보임 왜? camera 기본 위치가 정육면체의 기본 위치와 동일하기 때문(0,0,0)
 // -> camera 위치를 바꿔줌(camera.position.set)
 
-// scene, camera 연결
-renderer.render(scene, camera);
+function animate() {
+  // box 회전
+  box.rotation.y += 0.01;
+  // box가 회전할 때마다 렌더링해야함(변경된 속성값 렌더링)
+  renderer.render(scene, camera);
+
+  requestAnimationFrame(animate);
+}
+animate();
