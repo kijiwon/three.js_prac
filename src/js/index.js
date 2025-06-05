@@ -47,10 +47,20 @@ scene.add(box);
 
 function animate() {
   // box 회전
-  box.rotation.y += 0.01;
+  //   box.rotation.y += 0.01;
   // box가 회전할 때마다 렌더링해야함(변경된 속성값 렌더링)
   renderer.render(scene, camera);
 
   requestAnimationFrame(animate);
 }
 animate();
+
+// 반응형
+window.addEventListener("resize", () => {
+  // 1. camera 종횡비
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix(); // camera 업데이트
+
+  // 2. renderer의 크기
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
