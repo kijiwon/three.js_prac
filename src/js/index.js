@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jms/Addons.js";
+
 // html canvas 태그 선택
 const $result = document.getElementById("result");
 
@@ -48,15 +50,40 @@ const basic = new THREE.MeshBasicMaterial({
   // 4. opacity: 불투명도
   opacity: 0.5,
 });
-const mesh = new THREE.Mesh(geometry, basic);
+
+const standard = new THREE.MeshStandardMaterial({
+  color: 0xffaaaa,
+});
+
+const mesh = new THREE.Mesh(geometry, standard);
 scene.add(mesh);
+
+// OrbitControls
+const controls = new OrbitControls(camera, renderer.domElement);
+// 조작 설정 - zoom 제어
+// controls.enableZoom = false;
+// controls.enableRotate = false; // 회전 제어
+// controls.enablePan = false; // 카메라 이동 제어
+
+// 조작 범위 제어
+controls.minDistance = 2;
+controls.maxDistance = 10;
+// 회전 각도 지정
+controls.maxPolarAngle = Math.PI / 3;
+
+// 자동 회전
+controls.autoRotate = true;
+controls.autoRotateSpeed = 10; // 회전 속도 설정 - 음수로 설정시 반대로 회전
+
+// 회전 시 관성 적용(부드러운 회전 효과)
+controls.enableDamping = true;
 
 function animate() {
   // box 회전
   //   box.rotation.y += 0.01;
   // box가 회전할 때마다 렌더링해야함(변경된 속성값 렌더링)
   renderer.render(scene, camera);
-
+  controls.update();
   requestAnimationFrame(animate);
 }
 animate();
