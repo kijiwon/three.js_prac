@@ -53,10 +53,24 @@ const basic = new THREE.MeshBasicMaterial({
 
 const standard = new THREE.MeshStandardMaterial({
   color: 0xffaaaa,
+  // 속성
+  // 거칠기 - 숫자가 작을수록 매끄러움(0-1)
+  roughness: 0.2,
+  // 금속성 - 숫자가 클수록 금속 질감이 더 표현됨(0-1)
+  metalness: 0.8,
+  // 텍스처 - 텍스처를 적용하는 객체 연결
+  // map:
+  // 렌더링할 면 결정
+  // 3D 객체에서는 확인하기 어려움 -> Plane 객체에서 확인
+  // 기본값은 FrontSide(앞면) => 회전 시 뒷면은 표시되지 않음
+  side: THREE.DoubleSide,
 });
 
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), standard);
+scene.add(plane);
+
 const mesh = new THREE.Mesh(geometry, standard);
-scene.add(mesh);
+// scene.add(mesh);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -69,10 +83,10 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.minDistance = 2;
 controls.maxDistance = 10;
 // 회전 각도 지정
-controls.maxPolarAngle = Math.PI / 3;
+// controls.maxPolarAngle = Math.PI / 3;
 
 // 자동 회전
-controls.autoRotate = true;
+// controls.autoRotate = true;
 controls.autoRotateSpeed = 10; // 회전 속도 설정 - 음수로 설정시 반대로 회전
 
 // 회전 시 관성 적용(부드러운 회전 효과)
