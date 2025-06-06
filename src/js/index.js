@@ -17,7 +17,7 @@ const camera = new THREE.PerspectiveCamera(
   1000 // 최대거리
 );
 // 위치 설정
-camera.position.set(0, 0, 5);
+camera.position.set(2, 2, 2);
 // 바라볼 좌표값 설정 - camera는 z축에 평행한 방향을 비춤
 camera.lookAt(0, 0, 0);
 
@@ -36,42 +36,20 @@ light.position.set(2, 4, 3);
 scene.add(light); // light가 밝히는 위치만 밝게 표시됨
 
 // Mesh(3D 객체) ,Geometry(형태), Material(재질)
-const material = new THREE.MeshStandardMaterial({ color: 0x2e6ff2 });
-
-// 육면체
-const geo1 = new THREE.BoxGeometry(1, 1, 1);
-const obj1 = new THREE.Mesh(geo1, material);
-// scene.add(obj1);
-
-// 원뿔
-const geo2 = new THREE.ConeGeometry(0.5, 1, 31);
-const obj2 = new THREE.Mesh(geo2, material);
-// scene.add(obj2);
-
-// 원기둥
-const geo3 = new THREE.CylinderGeometry(0.5, 0.8, 1);
-const obj3 = new THREE.Mesh(geo3, material);
-// scene.add(obj3);
-
-// 구
-const geo4 = new THREE.SphereGeometry(1);
-const obj4 = new THREE.Mesh(geo4, material);
-// scene.add(obj4);
-
-// 평면
-const geo5 = new THREE.PlaneGeometry(1, 2);
-const obj5 = new THREE.Mesh(geo5, material);
-// scene.add(obj5);
-
-// 원
-const geo6 = new THREE.CircleGeometry(1, 32);
-const obj6 = new THREE.Mesh(geo6, material);
-// scene.add(obj6);
-
-// 튜브
-const geo7 = new THREE.TorusGeometry(1, 0.3);
-const obj7 = new THREE.Mesh(geo7, material);
-scene.add(obj7);
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const basic = new THREE.MeshBasicMaterial({
+  // Material 기본 속성
+  // 1. color: Hex 코드 입력
+  color: 0x2e6ff2,
+  // 2. wireframe: 와이어프레임으로 렌더링(면 제거)
+  //   wireframe: true,
+  // 3. transparent: 투명도 사용 여부 -> true일 때 opacity 적용
+  transparent: true,
+  // 4. opacity: 불투명도
+  opacity: 0.5,
+});
+const mesh = new THREE.Mesh(geometry, basic);
+scene.add(mesh);
 
 function animate() {
   // box 회전
