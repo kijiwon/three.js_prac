@@ -66,11 +66,26 @@ const standard = new THREE.MeshStandardMaterial({
   side: THREE.DoubleSide,
 });
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), standard);
-scene.add(plane);
+// physicalMaterial은 standardMaterial의 확장 버전 -> 고급 물리 기반 렌더링 제공
+const physical = new THREE.MeshPhysicalMaterial({
+  color: 0xffaaaa,
+  // 반투명 레이어층
+  clearcoat: 0.8,
+  // 반투명 강도
+  clearcoatRoughness: 0.2,
+});
 
-const mesh = new THREE.Mesh(geometry, standard);
-// scene.add(mesh);
+// 광택이 있는 표면을 표현(금속, 유리, 보석)
+const phong = new THREE.MeshPhongMaterial({
+  color: 0xffaaaa,
+  // 광택의 정도
+  shininess: 100,
+  // 물체가 반사하는 빛의 색상
+  specular: 0x2eff2,
+});
+
+const mesh = new THREE.Mesh(geometry, physical);
+scene.add(mesh);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
