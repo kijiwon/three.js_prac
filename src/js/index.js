@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jms/Addons.js";
+import printTree from "../mesh/tree.js";
+import printTangerine from "../mesh/tangerine.js";
 
 const $result = document.getElementById("result");
 
@@ -32,122 +34,14 @@ light.position.set(2, 4, 3);
 scene.add(light); // light가 밝히는 위치만 밝게 표시됨
 
 // 한라봉
-const fruit = new THREE.Group();
-// 그룹화 - 몸통
-const body = new THREE.Group();
-const bodyMaterial = new THREE.MeshStandardMaterial({
-  color: 0xff7b00,
-});
-// 아래쪽
-const bottomGeometry = new THREE.DodecahedronGeometry(2, 1);
-const bottom = new THREE.Mesh(bottomGeometry, bodyMaterial);
-body.add(bottom);
-// 위쪽
-const topGeometry = new THREE.TetrahedronGeometry(0.8, 3);
-const top = new THREE.Mesh(topGeometry, bodyMaterial);
-body.add(top);
-// 두 mesh를 합치기(top mesh의 position 설정)
-top.position.y = 1.7;
-
-// 그룹화 - 나뭇잎
-const fruitLeaf = new THREE.Group();
-const leafMaterial = new THREE.MeshStandardMaterial({
-  color: 0x008000,
-  side: THREE.DoubleSide, // leaf이 모두 보이도록 설정
-});
-
-// 나뭇잎 줄기
-const stemGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.4);
-const stem = new THREE.Mesh(stemGeometry, leafMaterial);
-// 줄기 위치 설정
-stem.position.y = 2.5;
-fruitLeaf.add(stem);
-
-// 나뭇잎
-const leafGeometry = new THREE.SphereGeometry(0.5, 32, 16, 0, Math.PI / 3);
-const leaf = new THREE.Mesh(leafGeometry, leafMaterial);
-leaf.position.set(-0.5, 2.4, -0.1);
-leaf.rotation.z = Math.PI / -2;
-fruitLeaf.add(leaf);
-
-fruit.add(body);
-fruit.add(fruitLeaf);
-scene.add(fruit);
+const tangerine1 = printTangerine();
+tangerine1.position.x = 3;
+tangerine1.scale.set(0.8, 0.8, 0.8);
+scene.add(tangerine1);
 
 // 나무
-const tree = new THREE.Group();
-// 그룹화 - 나무 몸통
-const trunk = new THREE.Group();
-
-const trunkMaterial = new THREE.MeshStandardMaterial({
-  color: 0xa38049,
-});
-const trunkGeometry = new THREE.CylinderGeometry(0.8, 1, 1.5);
-const trunk1 = new THREE.Mesh(trunkGeometry, trunkMaterial);
-trunk.add(trunk1);
-
-const trunk2 = new THREE.Mesh(trunkGeometry, trunkMaterial);
-trunk2.position.set(0.1, 1.3, 0);
-trunk2.scale.set(0.9, 0.9, 0.9);
-trunk2.rotation.z = THREE.MathUtils.degToRad(-5);
-trunk.add(trunk2);
-
-const trunk3 = new THREE.Mesh(trunkGeometry, trunkMaterial);
-trunk3.position.set(0.2, 2.5, 0);
-trunk3.scale.set(0.8, 0.8, 0.8);
-trunk3.rotation.z = THREE.MathUtils.degToRad(-5);
-trunk.add(trunk3);
-
-const trunk4 = new THREE.Mesh(trunkGeometry, trunkMaterial);
-trunk4.position.set(0.3, 3.5, 0);
-trunk4.scale.set(0.7, 0.7, 0.7);
-trunk4.rotation.z = THREE.MathUtils.degToRad(-8);
-trunk.add(trunk4);
-
-tree.add(trunk);
-
-// 그룹화 - 나뭇잎
-const treeLeaf = new THREE.Group();
-
-const treeLeafMaterial = new THREE.MeshStandardMaterial({
-  color: 0x84ad88,
-  side: THREE.DoubleSide,
-});
-const treeLeafGeometry = new THREE.SphereGeometry(
-  2,
-  32,
-  16,
-  Math.PI / 3, // 잎의 각도 = 60도
-  Math.PI / 3 // 잎의 길이 = 60도
-);
-const treeLeaf1 = new THREE.Mesh(treeLeafGeometry, treeLeafMaterial);
-treeLeaf1.rotation.x = Math.PI / -2;
-treeLeaf1.position.set(0, 3.2, 2);
-treeLeaf.add(treeLeaf1);
-
-const treeLeaf2 = new THREE.Mesh(treeLeafGeometry, treeLeafMaterial);
-treeLeaf2.rotation.x = Math.PI / -2;
-treeLeaf2.rotation.z = Math.PI / 2;
-treeLeaf2.position.set(2, 3.2, 0);
-treeLeaf.add(treeLeaf2);
-
-const treeLeaf3 = new THREE.Mesh(treeLeafGeometry, treeLeafMaterial);
-treeLeaf3.rotation.x = Math.PI / -2;
-treeLeaf3.rotation.z = Math.PI;
-treeLeaf3.position.set(0, 3.2, -2);
-treeLeaf.add(treeLeaf3);
-
-const treeLeaf4 = new THREE.Mesh(treeLeafGeometry, treeLeafMaterial);
-treeLeaf4.rotation.x = Math.PI / -2;
-treeLeaf4.rotation.z = Math.PI / -2;
-treeLeaf4.position.set(-2, 3.2, 0);
-treeLeaf.add(treeLeaf4);
-
-tree.add(treeLeaf);
-treeLeaf.position.x = -0.4;
-treeLeaf.rotation.z = THREE.MathUtils.degToRad(-10);
-
-scene.add(tree);
+const tree1 = printTree();
+scene.add(tree1);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
