@@ -19,6 +19,7 @@ camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({ canvas: $result, antialias: true });
 renderer.setSize($result.clientWidth, $result.clientHeight);
+renderer.shadowMap.enabled = true;
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshStandardMaterial({
@@ -43,7 +44,8 @@ dl.position.set(2, 4, 3);
 scene.add(dl);
 dl.castShadow = true;
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
