@@ -3,6 +3,7 @@ import { OrbitControls } from "three/examples/jms/Addons.js";
 import printTangerine from "../mesh/tangerine.js";
 import printTree from "../mesh/tree.js";
 import printMountain from "../mesh/mountain.js";
+import printStone from "../mesh/stone.js";
 
 const $result = document.getElementById("result");
 
@@ -32,14 +33,17 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
 const fruit = printTangerine();
 fruit.position.x = -5;
-scene.add(fruit);
+// scene.add(fruit);
 
 const tree = printTree();
 tree.position.x = 5;
-scene.add(tree);
+// scene.add(tree);
 
 const mountain = printMountain();
-scene.add(mountain);
+// scene.add(mountain);
+
+const stone = printStone();
+scene.add(stone);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
