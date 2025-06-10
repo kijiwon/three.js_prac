@@ -1,12 +1,24 @@
 import * as THREE from "three";
 
 export default function printTangerine() {
+  // 텍스쳐
+  const loader = new THREE.TextureLoader();
+  const basecolor = loader.load(
+    "../../src/textures/orange/Orange_001_COLOR.jpg"
+  );
+  const normal = loader.load("../../src/textures/orange/Orange_001_NORM.jpg");
+  const rough = loader.load("../../src/textures/orange/Orange_001_ROUGH.jpg");
+
   // 한라봉
   const tangerine = new THREE.Group();
   // 그룹화 - 몸통
   const body = new THREE.Group();
   const bodyMaterial = new THREE.MeshStandardMaterial({
-    color: 0xff7b00,
+    color: 0xffa373,
+    map: basecolor,
+    normalMap: normal, // 빛의 왜곡 효과
+    roughness: 0.2,
+    roughnessMap: rough,
   });
   // 아래쪽
   const bottomGeometry = new THREE.DodecahedronGeometry(2, 1);
@@ -22,7 +34,7 @@ export default function printTangerine() {
   // 그룹화 - 나뭇잎
   const fruitLeaf = new THREE.Group();
   const leafMaterial = new THREE.MeshStandardMaterial({
-    color: 0x008000,
+    color: 0x6ca06e,
     side: THREE.DoubleSide, // leaf이 모두 보이도록 설정
   });
 

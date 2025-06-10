@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jms/Addons.js";
+import printTangerine from "../mesh/tangerine.js";
 
 const $result = document.getElementById("result");
 
@@ -21,31 +22,12 @@ const renderer = new THREE.WebGLRenderer({ canvas: $result, antialias: true });
 renderer.setSize($result.clientWidth, $result.clientHeight);
 renderer.shadowMap.enabled = true;
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshStandardMaterial({
-  color: 0xffaaaa,
-});
+const light = new THREE.DirectionalLight(0xffffff, 2);
+light.position.set(2, 4, 3);
+scene.add(light);
 
-const materials = [
-  // 정육면제에 적용할 재질
-  new THREE.MeshStandardMaterial({ color: 0xff0000 }),
-  new THREE.MeshStandardMaterial({ color: 0xff8c00 }),
-  new THREE.MeshStandardMaterial({ color: 0xffee00 }),
-  new THREE.MeshStandardMaterial({ color: 0x4de94c }),
-  new THREE.MeshStandardMaterial({ color: 0x3783ff }),
-  new THREE.MeshStandardMaterial({ color: 0x4815aa }),
-];
-
-const mesh = new THREE.Mesh(geometry, materials);
-scene.add(mesh);
-
-const dl = new THREE.DirectionalLight(0xffffff, 1);
-dl.position.set(2, 4, 3);
-scene.add(dl);
-dl.castShadow = true;
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
+const fruit = printTangerine();
+scene.add(fruit);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
