@@ -17,6 +17,7 @@ export default function printstone() {
     normalMap: normal,
     roughnessMap: rough,
     roughness: 0.8,
+    // displacementMap: height,
   });
 
   const headGeometry = new THREE.CylinderGeometry(1, 1.5, 3, 4);
@@ -74,6 +75,12 @@ export default function printstone() {
 
   stone.add(leftPupil);
   stone.add(rightPupil);
+
+  // 코
+  const noseGm = new THREE.CylinderGeometry(0.1, 0.2, 0.4, 6);
+  const nose = new THREE.Mesh(noseGm, material);
+  nose.position.set(0, 2.2, 1);
+  stone.add(nose);
 
   return stone;
 }
