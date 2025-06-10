@@ -36,5 +36,44 @@ export default function printstone() {
   body.rotation.y = Math.PI / 4;
   stone.add(body);
 
+  // 팔
+  const armsGm = new THREE.CylinderGeometry(0.5, 0.5, 2.5, 6);
+  const leftArm = new THREE.Mesh(armsGm, material);
+  leftArm.position.set(-1.5, 1.5, 0);
+  leftArm.rotation.z = Math.PI / 3;
+  stone.add(leftArm);
+
+  const rightArm = new THREE.Mesh(armsGm, material);
+  rightArm.position.set(1.5, 1.5, 0);
+  rightArm.rotation.z = Math.PI / -3;
+  stone.add(rightArm);
+
+  // 눈
+  const eyeGm = new THREE.CapsuleGeometry(0.3, 0.2);
+  const eyeMt = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    roughness: 0.4,
+  });
+  const leftEye = new THREE.Mesh(eyeGm, eyeMt);
+  leftEye.position.set(-0.25, 2.5, 0.75);
+  const rightEye = new THREE.Mesh(eyeGm, eyeMt);
+  rightEye.position.set(0.25, 2.5, 0.75);
+
+  stone.add(leftEye);
+  stone.add(rightEye);
+
+  // 눈알
+  const pupilGm = new THREE.SphereGeometry(0.1);
+  const pupilMt = new THREE.MeshStandardMaterial({
+    color: 0x000000,
+  });
+  const leftPupil = new THREE.Mesh(pupilGm, pupilMt);
+  leftPupil.position.set(-0.2, 2.5, 1);
+  const rightPupil = new THREE.Mesh(pupilGm, pupilMt);
+  rightPupil.position.set(0.3, 2.5, 1);
+
+  stone.add(leftPupil);
+  stone.add(rightPupil);
+
   return stone;
 }
