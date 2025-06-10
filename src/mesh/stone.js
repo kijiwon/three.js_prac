@@ -82,5 +82,10 @@ export default function printstone() {
   nose.position.set(0, 2.2, 1);
   stone.add(nose);
 
+  // 모든 mesh에 그림자 적용
+  for (const mesh of stone.children) {
+    mesh.castShadow = true;
+  }
+
   return stone;
 }
