@@ -46,11 +46,16 @@ export default function printTree() {
   tree.add(trunk);
 
   // 그룹화 - 나뭇잎
+  // 텍스쳐
+  const leafTexture = loader.load("../../src/textures/leaf/leaf_texture.png");
+
   const leaf = new THREE.Group();
 
   const leafMaterial = new THREE.MeshStandardMaterial({
     color: 0x84ad88,
     side: THREE.DoubleSide,
+    map: leafTexture,
+    transparent: true, // 투명한 부분 살리기
   });
   const leafGeometry = new THREE.SphereGeometry(
     2,
