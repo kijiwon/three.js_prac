@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jms/Addons.js";
 import printTangerine from "../mesh/tangerine.js";
 import printTree from "../mesh/tree.js";
+import printMountain from "../mesh/mountain.js";
 
 const $result = document.getElementById("result");
 
@@ -27,12 +28,18 @@ const light = new THREE.DirectionalLight(0xffffff, 2);
 light.position.set(2, 4, 3);
 scene.add(light);
 
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
 const fruit = printTangerine();
 fruit.position.x = -5;
 scene.add(fruit);
 
 const tree = printTree();
+tree.position.x = 5;
 scene.add(tree);
+
+const mountain = printMountain();
+scene.add(mountain);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
