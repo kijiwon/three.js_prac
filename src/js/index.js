@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jms/Addons.js";
 import printTangerine from "../mesh/tangerine.js";
+import printTree from "../mesh/tree.js";
 
 const $result = document.getElementById("result");
 
@@ -14,7 +15,7 @@ const camera = new THREE.PerspectiveCamera(
   1000 // 최대거리
 );
 // 위치 설정
-camera.position.set(3, 3, 3);
+camera.position.set(0, 10, 20);
 // 바라볼 좌표값 설정 - camera는 z축에 평행한 방향을 비춤
 camera.lookAt(0, 0, 0);
 
@@ -27,7 +28,11 @@ light.position.set(2, 4, 3);
 scene.add(light);
 
 const fruit = printTangerine();
+fruit.position.x = -5;
 scene.add(fruit);
+
+const tree = printTree();
+scene.add(tree);
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);

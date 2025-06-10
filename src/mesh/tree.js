@@ -1,6 +1,13 @@
 import * as THREE from "three";
 
 export default function printTree() {
+  // 텍스쳐
+  const loader = new THREE.TextureLoader();
+  const basecolor = loader.load("../../src/textures/wood/wood_basecolor.jpg");
+  const normal = loader.load("../../src/textures/wood/wood_normal.jpg");
+  const rough = loader.load("../../src/textures/wood/wood_roughness.jpg");
+  const height = loader.load("../../src/textures/wood/wood_height.ong");
+
   // 나무
   const tree = new THREE.Group();
   // 그룹화 - 나무 몸통
@@ -8,7 +15,12 @@ export default function printTree() {
 
   const trunkMaterial = new THREE.MeshStandardMaterial({
     color: 0xa38049,
+    map: basecolor,
+    normalMap: normal,
+    roughnessMap: rough,
+    displacementMap: height,
   });
+
   const trunkGeometry = new THREE.CylinderGeometry(0.8, 1, 1.5);
   const trunk1 = new THREE.Mesh(trunkGeometry, trunkMaterial);
   trunk.add(trunk1);
