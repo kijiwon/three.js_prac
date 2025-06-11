@@ -26,7 +26,7 @@ directionalLight.castShadow = true;
 scene.add(directionalLight);
 
 const pl1 = new THREE.PointLight(0xff8c00, 1.5);
-pl1.position.set(1, 0, 0);
+pl1.position.set(4, 6, -3);
 scene.add(pl1);
 
 const pl2 = new THREE.PointLight(0xffe287, 2);
@@ -71,7 +71,7 @@ scene.add(mountain);
 
 // OrbitControls
 const control = new OrbitControls(camera, renderer.domElement);
-control.autoRotate = true;
+// control.autoRotate = true;
 control.autoRotateSpeed = -1;
 control.minDistance = 10;
 control.maxDistance = 30;
