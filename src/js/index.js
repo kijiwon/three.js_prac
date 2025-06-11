@@ -30,7 +30,7 @@ pl1.position.set(5, 0, 0);
 scene.add(pl1);
 
 const pl2 = new THREE.PointLight(0xffe287, 2);
-pl2.position.set(-3, 2, 0);
+pl2.position.set(-5.5, 3, 5);
 scene.add(pl2);
 
 const renderer = new THREE.WebGLRenderer();
@@ -43,10 +43,10 @@ const island = printIsland();
 scene.add(island);
 
 const tangerine = printTangerine();
-tangerine.position.set(-3, 2, 1);
+tangerine.position.set(-4, 2, 2.5);
 scene.add(tangerine);
 const miniTan = printTangerine();
-miniTan.position.set(-0.2, 1.5, 2);
+miniTan.position.set(-1, 1.5, 3);
 miniTan.scale.set(0.7, 0.7, 0.7);
 scene.add(miniTan);
 
@@ -61,11 +61,11 @@ miniTree.scale.set(0.8, 0.8, 0.8);
 scene.add(miniTree);
 
 const stone = printStone();
-stone.position.set(4, 1, 0);
+stone.position.set(4, 1, 2.5);
 scene.add(stone);
 
 const mountain = printMountain();
-mountain.position.set(0, 2, -2);
+mountain.position.set(0, 3.5, -1.5);
 mountain.scale.set(2, 2);
 scene.add(mountain);
 
