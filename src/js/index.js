@@ -1,9 +1,6 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jms/Addons.js";
-import printTangerine from "../mesh/tangerine.js";
-import printTree from "../mesh/tree.js";
-import printMountain from "../mesh/mountain.js";
-import printStone from "../mesh/stone.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "three/examples/jsm/Addons.js";
 
 const $result = document.getElementById("result");
 
@@ -31,19 +28,13 @@ scene.add(light);
 
 scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-const fruit = printTangerine();
-fruit.position.x = -5;
-// scene.add(fruit);
-
-const tree = printTree();
-tree.position.x = 5;
-// scene.add(tree);
-
-const mountain = printMountain();
-// scene.add(mountain);
-
-const stone = printStone();
-scene.add(stone);
+// GLTF model
+const loader = new GLTFLoader();
+loader.load("../../src/models/Lycat-3d.glb", (gltf) => {
+  // console.log(gltf);
+  const model = gltf.scene;
+  scene.add(model);
+});
 
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
