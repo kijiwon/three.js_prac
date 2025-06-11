@@ -71,6 +71,7 @@ scene.add(mountain);
 
 // OrbitControls
 const control = new OrbitControls(camera, renderer.domElement);
+control.autoRotate = true;
 
 // 애니메이션 콜백함수
 function animate() {
@@ -79,3 +80,9 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
+
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
