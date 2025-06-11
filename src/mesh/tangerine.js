@@ -14,7 +14,7 @@ export default function printTangerine() {
   // 그룹화 - 몸통
   const body = new THREE.Group();
   const bodyMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffa373,
+    color: 0xffd16b,
     map: basecolor,
     normalMap: normal, // 빛의 왜곡 효과
     roughness: 0.2,
