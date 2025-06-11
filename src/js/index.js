@@ -15,7 +15,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(0, 20, 20);
+camera.position.set(0, 10, 20);
 camera.lookAt(0, 0, 0);
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
@@ -26,7 +26,7 @@ directionalLight.castShadow = true;
 scene.add(directionalLight);
 
 const pl1 = new THREE.PointLight(0xff8c00, 1.5);
-pl1.position.set(5, 0, 0);
+pl1.position.set(1, 0, 0);
 scene.add(pl1);
 
 const pl2 = new THREE.PointLight(0xffe287, 2);
@@ -72,6 +72,9 @@ scene.add(mountain);
 // OrbitControls
 const control = new OrbitControls(camera, renderer.domElement);
 control.autoRotate = true;
+control.autoRotateSpeed = -1;
+control.minDistance = 10;
+control.maxDistance = 30;
 
 // 애니메이션 콜백함수
 function animate() {
