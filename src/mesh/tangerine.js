@@ -52,6 +52,16 @@ export default function printTangerine() {
   leaf.rotation.z = Math.PI / -2;
   fruitLeaf.add(leaf);
 
+  // 그림자
+  for (const mesh of body.children) {
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  }
+  for (const mesh of fruitLeaf.children) {
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+  }
+
   tangerine.add(body);
   tangerine.add(fruitLeaf);
 

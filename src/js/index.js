@@ -21,10 +21,13 @@ camera.lookAt(0, 0, 0);
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
 scene.add(ambientLight);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(-10, 10, 10);
+directionalLight.castShadow = true;
 scene.add(directionalLight);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
 
 document.body.appendChild(renderer.domElement);
 
@@ -32,10 +35,10 @@ const island = printIsland();
 scene.add(island);
 
 const tangerine = printTangerine();
-tangerine.position.set(-3, 1, 1);
+tangerine.position.set(-3, 2, 1);
 scene.add(tangerine);
 const miniTan = printTangerine();
-miniTan.position.set(-0.2, 1, 2);
+miniTan.position.set(-0.2, 1.5, 2);
 miniTan.scale.set(0.7, 0.7, 0.7);
 scene.add(miniTan);
 

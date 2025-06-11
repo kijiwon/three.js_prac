@@ -91,5 +91,13 @@ export default function printTree() {
   leaf.rotation.z = THREE.MathUtils.degToRad(-10);
   tree.add(leaf);
 
+  // 그림자를 만드는 mesh -> castShadow
+  for (const mesh of trunk.children) {
+    mesh.castShadow = true;
+  }
+  for (const mesh of leaf.children) {
+    mesh.castShadow = true;
+  }
+
   return tree;
 }

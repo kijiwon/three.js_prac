@@ -21,5 +21,8 @@ export default function printIsland() {
   bottom.position.y = -3;
   island.add(bottom);
 
+  // 그림자를 받는 mesh -> receiveShadow
+  top.receiveShadow = true;
+
   return island;
 }
