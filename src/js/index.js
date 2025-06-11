@@ -71,7 +71,7 @@ scene.add(mountain);
 
 // OrbitControls
 const control = new OrbitControls(camera, renderer.domElement);
-// control.autoRotate = true;
+control.autoRotate = true;
 control.autoRotateSpeed = -1;
 control.minDistance = 10;
 control.maxDistance = 30;
