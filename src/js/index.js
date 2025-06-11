@@ -25,6 +25,14 @@ directionalLight.position.set(-10, 10, 10);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
 
+const pl1 = new THREE.PointLight(0xff8c00, 1.5);
+pl1.position.set(5, 0, 0);
+scene.add(pl1);
+
+const pl2 = new THREE.PointLight(0xffe287, 2);
+pl2.position.set(-3, 2, 0);
+scene.add(pl2);
+
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
