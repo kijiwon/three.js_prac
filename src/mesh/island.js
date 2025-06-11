@@ -11,5 +11,15 @@ export default function printIsland() {
   top.scale.x = 2;
   island.add(top);
 
+  const bottomGeometry = new THREE.ConeGeometry(5, 6, 9);
+  const bottomMaterial = new THREE.MeshStandardMaterial({
+    color: 0xe0b070,
+  });
+  const bottom = new THREE.Mesh(bottomGeometry, bottomMaterial);
+  bottom.scale.x = 2;
+  bottom.rotation.z = THREE.MathUtils.degToRad(180);
+  bottom.position.y = -3;
+  island.add(bottom);
+
   return island;
 }
