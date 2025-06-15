@@ -6,12 +6,12 @@ const objColor = 0xffffff;
 const floorColor = 0x555555;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(floorColor);
+scene.background = new THREE.Color(fogColor);
 // fog
-scene.fog = new THREE.Fog(fogColor, 10, 50);
+scene.fog = new THREE.Fog(fogColor, 10, 18);
 
 const camera = new THREE.PerspectiveCamera(
-  40,
+  80,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
@@ -26,6 +26,7 @@ const geometry = new THREE.TorusGeometry(1, 0.5, 12, 80);
 const material = new THREE.MeshStandardMaterial({ color: objColor });
 const obj = new THREE.Mesh(geometry, material);
 obj.position.y = 0.8;
+obj.position.z = -5;
 scene.add(obj);
 
 const planeGeometry = new THREE.PlaneGeometry(30, 30, 1, 1);
@@ -57,6 +58,7 @@ control.maxDistance = 30;
 
 // 애니메이션 콜백함수
 function animate() {
+  obj.rotation.y += 0.01;
   control.update();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
