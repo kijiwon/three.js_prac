@@ -1,14 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-const fogColor = 0x004fff;
-const objColor = 0xffffff;
-const floorColor = 0x555555;
-
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(fogColor);
-// fog
-scene.fog = new THREE.Fog(fogColor, 10, 18);
+scene.background = new THREE.Color(0xeeeeee);
 
 const camera = new THREE.PerspectiveCamera(
   80,
@@ -16,25 +10,75 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(0, 2, 3);
+camera.position.set(0, 20, 100);
 camera.lookAt(0, 0, 0);
 
 const axesHelper = new THREE.AxesHelper(5);
 // scene.add(axesHelper);
 
-const geometry = new THREE.TorusGeometry(1, 0.5, 12, 80);
-const material = new THREE.MeshStandardMaterial({ color: objColor });
-const obj = new THREE.Mesh(geometry, material);
-obj.position.y = 0.8;
-obj.position.z = -5;
-scene.add(obj);
+const skyMaterialArray = [];
+const texture_bk = new THREE.TextureLoader().load(
+  "../../src/textures/sky/meadow_bk.jpg"
+);
+const texture_dn = new THREE.TextureLoader().load(
+  "../../src/textures/sky/meadow_dn.jpg"
+);
+const texture_ft = new THREE.TextureLoader().load(
+  "../../src/textures/sky/meadow_ft.jpg"
+);
+const texture_lf = new THREE.TextureLoader().load(
+  "../../src/textures/sky/meadow_lf.jpg"
+);
+const texture_rt = new THREE.TextureLoader().load(
+  "../../src/textures/sky/meadow_rt.jpg"
+);
+const texture_up = new THREE.TextureLoader().load(
+  "../../src/textures/sky/meadow_up.jpg"
+);
 
-const planeGeometry = new THREE.PlaneGeometry(30, 30, 1, 1);
-const planeMaterial = new THREE.MeshStandardMaterial({ color: floorColor });
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.position.y = -3;
-plane.rotation.x = -0.5 * Math.PI;
-scene.add(plane);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: texture_ft,
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: texture_bk,
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: texture_up,
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: texture_dn,
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: texture_rt,
+  })
+);
+skyMaterialArray.push(
+  new THREE.MeshStandardMaterial({
+    map: texture_lf,
+  })
+);
+
+for (let i = 0; i < 6; i++) {
+  skyMaterialArray[i].side = THREE.BackSide;
+}
+
+const skyGeometry = new THREE.BoxGeometry(400, 400, 400);
+const skyMaterial = new THREE.MeshStandardMaterial({
+  // color: 0x333333,
+  // map: texture,
+});
+skyMaterial.side = THREE.BackSide;
+const sky = new THREE.Mesh(skyGeometry, skyMaterialArray);
+scene.add(sky);
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
@@ -51,14 +95,11 @@ document.body.appendChild(renderer.domElement);
 
 // OrbitControls
 const control = new OrbitControls(camera, renderer.domElement);
-// control.autoRotate = true;
-control.autoRotateSpeed = -1;
-control.minDistance = 10;
-control.maxDistance = 30;
+control.minDistance = 20;
+control.maxDistance = 800;
 
 // 애니메이션 콜백함수
 function animate() {
-  obj.rotation.y += 0.01;
   control.update();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
