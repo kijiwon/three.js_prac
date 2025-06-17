@@ -52,15 +52,25 @@ function onMouseMove(e) {
 
   if (intersects.length > 0) {
     // 마우스 인
-    // console.log("마우스 인");
+    console.log("마우스 인");
     gsap.to(objGroup.rotation, 1, {
-      y: 5,
+      y: 7,
+    });
+    gsap.to(objGroup.scale, 1, {
+      x: 2,
+      y: 2,
+      z: 2,
     });
   } else {
     // 마우스 아웃
-    // console.log("마우스 아웃");
+    console.log("마우스 아웃");
     gsap.to(objGroup.rotation, 1, {
       y: 0,
+    });
+    gsap.to(objGroup.scale, 1, {
+      x: 1,
+      y: 1,
+      z: 1,
     });
   }
 }
