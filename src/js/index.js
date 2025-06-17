@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xeeeeee);
@@ -10,76 +11,19 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(0, 20, 100);
+camera.position.set(2, 2, 2);
 camera.lookAt(0, 0, 0);
 
 const axesHelper = new THREE.AxesHelper(5);
 // scene.add(axesHelper);
 
-const skyMaterialArray = [];
-const texture_bk = new THREE.TextureLoader().load(
-  "../../src/textures/sky/meadow_bk.jpg"
-);
-const texture_dn = new THREE.TextureLoader().load(
-  "../../src/textures/sky/meadow_dn.jpg"
-);
-const texture_ft = new THREE.TextureLoader().load(
-  "../../src/textures/sky/meadow_ft.jpg"
-);
-const texture_lf = new THREE.TextureLoader().load(
-  "../../src/textures/sky/meadow_lf.jpg"
-);
-const texture_rt = new THREE.TextureLoader().load(
-  "../../src/textures/sky/meadow_rt.jpg"
-);
-const texture_up = new THREE.TextureLoader().load(
-  "../../src/textures/sky/meadow_up.jpg"
-);
-
-skyMaterialArray.push(
-  new THREE.MeshStandardMaterial({
-    map: texture_ft,
-  })
-);
-skyMaterialArray.push(
-  new THREE.MeshStandardMaterial({
-    map: texture_bk,
-  })
-);
-skyMaterialArray.push(
-  new THREE.MeshStandardMaterial({
-    map: texture_up,
-  })
-);
-skyMaterialArray.push(
-  new THREE.MeshStandardMaterial({
-    map: texture_dn,
-  })
-);
-skyMaterialArray.push(
-  new THREE.MeshStandardMaterial({
-    map: texture_rt,
-  })
-);
-skyMaterialArray.push(
-  new THREE.MeshStandardMaterial({
-    map: texture_lf,
-  })
-);
-
-for (let i = 0; i < 6; i++) {
-  skyMaterialArray[i].side = THREE.BackSide;
-}
-
-const skyGeometry = new THREE.BoxGeometry(400, 400, 400);
-const skyMaterial = new THREE.MeshStandardMaterial({
-  // color: 0x333333,
-  // map: texture,
+const objGroup = new THREE.Group();
+const loader = new GLTFLoader();
+loader.load("../../src/textures/shiba/scene.gltf", (gltf) => {
+  const model = gltf.scene;
+  objGroup.add(model);
 });
-skyMaterial.side = THREE.BackSide;
-const sky = new THREE.Mesh(skyGeometry, skyMaterialArray);
-scene.add(sky);
-
+scene.add(objGroup);
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);
 
@@ -87,16 +31,48 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(1, 1, 1);
 scene.add(directionalLight);
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  alpha: true,
+});
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 
+// raycaster
+const raycaster = new THREE.Raycaster();
+
+function onMouseMove(e) {
+  const mouse = {
+    x: (e.clientX / renderer.domElement.clientWidth) * 2 - 1, // -1 ~ 1 사이의 값
+    y: -(e.clientY / renderer.domElement.clientHeight) * 2 + 1, // -1 ~ 1 사이의 값
+  };
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children, true);
+
+  if (intersects.length > 0) {
+    // 마우스 인
+    // console.log("마우스 인");
+    gsap.to(objGroup.rotation, 1, {
+      y: 5,
+    });
+  } else {
+    // 마우스 아웃
+    // console.log("마우스 아웃");
+    gsap.to(objGroup.rotation, 1, {
+      y: 0,
+    });
+  }
+}
+
 document.body.appendChild(renderer.domElement);
+renderer.domElement.addEventListener("pointermove", onMouseMove);
 
 // OrbitControls
 const control = new OrbitControls(camera, renderer.domElement);
-control.minDistance = 20;
-control.maxDistance = 800;
+control.enableDamping = true;
+control.minDistance = 1;
+control.maxDistance = 100;
 
 // 애니메이션 콜백함수
 function animate() {
